@@ -4,6 +4,7 @@ from fastapi import FastAPI, HTTPException
 
 from starlette.requests import Request
 from starlette.responses import JSONResponse
+from starlette.middleware.cors import CORSMiddleware
 
 from app.routers import users, items, chat, vector_ops, langgraph_ops, sql_ops
 from app.services.db_connection import Base, engine
@@ -19,6 +20,12 @@ app = FastAPI()
 origins = ["http://localhost"] # Allows requests only from localhost
 
 #TODO for Ben: CORS middleware setup
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['http://localhost:5173'], # Allow only the React frontend running on localhost:5173
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 
 # Global custom Exception Handler
 # All Exceptions raised in the routers get handled here

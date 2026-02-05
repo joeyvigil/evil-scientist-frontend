@@ -1,22 +1,19 @@
 
 import axios from 'axios';
-import React from 'react'
 import { useState, useEffect } from 'react';
+import { Row, Col } from 'react-bootstrap';
+import DataDisplay from './DataDisplay';
 
 const Dashboard = () => {
-    type Pokemon = {
-        name: string;
-        sprites: { front_default: string };
-        height: number;
-        weight: number;
-        base_experience: number;
-    }
+
+    const [users, setUsers] = useState<any[]>([]);
 
 
-    const  [pokemonData, setPokemonData] = useState<Pokemon | null>(null);
+    const  [pokemonData, setPokemonData] = useState<any | null>(null);
 
     useEffect(() => {
         getRandomPokemon();
+        getAllUsers();
     }, []);
 
     //axios call that gets random pokemon data from pokeapi 
@@ -25,6 +22,12 @@ const Dashboard = () => {
         const pokemon = await axios.get(`https://pokeapi.co/api/v2/pokemon/${randomId}`);
         setPokemonData(pokemon.data);
         
+    }
+
+    const getAllUsers = async () => {
+        const users = await axios.get('http://127.0.0.1:8000/sql/');
+        console.log(users.data);
+        setUsers(users.data);
     }
 
   return (
@@ -41,6 +44,18 @@ const Dashboard = () => {
 
             </div>
         )}
+
+        <h3>Users:</h3>
+        {/* display all users */}
+        <Row >
+        {users && users.map((user: any) => (
+            <Col key={user.id} xs={12} sm={6} md={4} lg={3}>
+                <DataDisplay user={user}/>
+            </Col>
+        )) }
+        </Row>
+        
+
 
     </>
   )
