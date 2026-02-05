@@ -1,13 +1,21 @@
+import { useEffect, useRef } from 'react';
 import { Button, Container, Form } from 'react-bootstrap'
 import { useNavigate } from 'react-router';
 
 
 const Login = () => {
     const navigate = useNavigate();
+    
+    const usernameRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        if (usernameRef.current) {
+            usernameRef.current.focus();
+        }
+    }, []);
 
     const handleLogin = () => {
-        // Perform login logic here (e.g., authentication)
-        // On successful login, navigate to the dashboard
         navigate('/dashboard');
     }
 
@@ -17,9 +25,16 @@ const Login = () => {
 
         <div>
             <Form.Control 
+                type='text' 
+                placeholder='Enter your username'
+                name='username' 
+                ref={usernameRef}
+            />
+            <Form.Control 
                 type='password' 
                 placeholder='Enter your password'
                 name='password' 
+                ref={passwordRef}
             />
 
         <button onClick={handleLogin} className='btn btn-danger'>Login</button>
