@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Button, Container, Form } from 'react-bootstrap'
 import { useNavigate } from 'react-router';
+import { store } from '../GlobalData/store';
 
 
 
@@ -15,9 +16,15 @@ const Login = () => {
 
     const handleLogin = () => {
         if (username === 'admin' && password === 'password') {
-        navigate('/dashboard');
+            store.setLoggedInUser({
+                id: 1,
+                username: 'admin',
+                email: 'admin@example.com',
+                role: 'admin'
+            });
+            navigate('/dashboard');
         } else {
-        alert('Invalid credentials. Please try again.');
+            alert('Invalid credentials. Please try again.');
         }
     }
 
