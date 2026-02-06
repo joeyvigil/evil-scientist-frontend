@@ -8,6 +8,7 @@ import Dashboard from './Components/Dashboard.tsx'
 //npm install react-bootstrap bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
+import Chat from './Components/Chat.tsx'
 
 
 
@@ -22,6 +23,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/chat" element={<Chat />} />
         </Routes>
       </BrowserRouter>
 

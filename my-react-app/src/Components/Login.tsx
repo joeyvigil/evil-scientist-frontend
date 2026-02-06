@@ -1,22 +1,24 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button, Container, Form } from 'react-bootstrap'
 import { useNavigate } from 'react-router';
 
 
+
 const Login = () => {
     const navigate = useNavigate();
-    
-    const usernameRef = useRef<HTMLInputElement>(null);
-    const passwordRef = useRef<HTMLInputElement>(null);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
     useEffect(() => {
-        if (usernameRef.current) {
-            usernameRef.current.focus();
-        }
+
     }, []);
 
     const handleLogin = () => {
+        if (username === 'admin' && password === 'password') {
         navigate('/dashboard');
+        } else {
+        alert('Invalid credentials. Please try again.');
+        }
     }
 
   return (
@@ -28,13 +30,15 @@ const Login = () => {
                 type='text' 
                 placeholder='Enter your username'
                 name='username' 
-                ref={usernameRef}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
             />
             <Form.Control 
                 type='password' 
                 placeholder='Enter your password'
                 name='password' 
-                ref={passwordRef}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
             />
 
         <button onClick={handleLogin} className='btn btn-danger'>Login</button>
